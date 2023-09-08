@@ -1,4 +1,4 @@
-name: AX3600 OpenWRT Build
+name: AX3600-thinkcy-20230908
 
 on:
 #  schedule:
