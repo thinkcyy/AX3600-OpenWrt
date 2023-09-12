@@ -61,7 +61,7 @@ bash ../scripts/fix-argon.sh
 bash ../scripts/preset-terminal-tools.sh
 
 # config file
-cp ../config/AX3600-thinkcy-20230908.config .config
+cp ../config/AX3600-zhkong-thinkcy-minimal.config .config
 make defconfig
 
 # 编译固件
