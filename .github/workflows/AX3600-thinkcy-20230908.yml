@@ -1,4 +1,4 @@
-name: AX3600-thinkcy-20230908
+name: AX3600-zhkong-thinkcy-20230908
 
 on:
 #  schedule:
@@ -90,14 +90,14 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@main
       with:
-        name: OpenWRT_${{ env.tag_name }}
+        name: OpenWRT-AX3600-zhkong_${{ env.tag_name }}
         path: ./artifact/
 
     - name: Create release
       id: create_release
       uses: ncipollo/release-action@v1.12.0
       with:
-        name: ax3600-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
+        name: OpenWRT-AX3600-zhkong-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         allowUpdates: true
         tag: ${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         replacesArtifacts: true
