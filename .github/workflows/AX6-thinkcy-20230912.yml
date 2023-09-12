@@ -1,4 +1,4 @@
-name: AX3600-zhkong-thinkcy-20230908
+name: AX6-zhkong-thinkcy-20230912
 
 on:
 #  schedule:
@@ -51,7 +51,7 @@ jobs:
         df -h
     - name: prepare
       run: |
-        bash ./scripts/prepare-thinkcy.sh
+        bash ./scripts/prepare-AX6-thinkcy.sh
     - name: Get Architecture
       working-directory: ${{ github.workspace }}/openwrt
       run: |
@@ -91,14 +91,14 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@main
       with:
-        name: OpenWRT-AX3600-zhkong-thinkcy_${{ env.tag_name }}
+        name: OpenWRT-AX6-zhkong-thinkcy_${{ env.tag_name }}
         path: ./artifact/
 
     - name: Create release
       id: create_release
       uses: ncipollo/release-action@v1.12.0
       with:
-        name: OpenWRT-AX3600-zhkong-thinkcy-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
+        name: OpenWRT-AX6-zhkong-thinkcy-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         allowUpdates: true
         tag: ${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         replacesArtifacts: true
