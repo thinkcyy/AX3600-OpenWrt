@@ -47,6 +47,7 @@ jobs:
         sudo -E apt-get -qq clean
         sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
         sudo -E git config --global core.abbrev auto
+        sudo timedatectl set-timezone "Asia/Shanghai"
         df -h
     - name: prepare
       run: |
@@ -83,21 +84,21 @@ jobs:
       run: |
         rm -rf ./artifact/
         mkdir -p ./artifact/
-        mv openwrt/bin/targets/qualcommax/ipq807x/*squashfs-factory.* ./artifact/
-        mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
+        mv openwrt/bin/targets/qualcommax/ipq807x/* ./artifact/
+        # mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
         cd ./artifact/
         ls -Ahl
     - name: Upload artifact
       uses: actions/upload-artifact@main
       with:
-        name: OpenWRT-AX3600-zhkong_${{ env.tag_name }}
+        name: OpenWRT-AX3600-zhkong-thinkcy_${{ env.tag_name }}
         path: ./artifact/
 
     - name: Create release
       id: create_release
       uses: ncipollo/release-action@v1.12.0
       with:
-        name: OpenWRT-AX3600-zhkong-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
+        name: OpenWRT-AX3600-zhkong-thinkcy-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         allowUpdates: true
         tag: ${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         replacesArtifacts: true
