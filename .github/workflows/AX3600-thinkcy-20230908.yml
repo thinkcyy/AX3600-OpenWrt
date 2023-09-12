@@ -47,6 +47,7 @@ jobs:
         sudo -E apt-get -qq clean
         sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
         sudo -E git config --global core.abbrev auto
+        sudo timedatectl set-timezone "Asia/Shanghai"
         df -h
     - name: prepare
       run: |
