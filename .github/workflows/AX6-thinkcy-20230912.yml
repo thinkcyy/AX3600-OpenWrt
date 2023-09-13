@@ -84,8 +84,11 @@ jobs:
       run: |
         rm -rf ./artifact/
         mkdir -p ./artifact/
-        mv openwrt/bin/targets/qualcommax/ipq807x/* ./artifact/
-        # mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
+        mkdir -p ./release/
+        mv openwrt/bin/targets/qualcommax/ipq807x/*squashfs-factory.* ./artifact/
+        mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
+        cp -rf $(find ./artifact/ -type f -name "*squashfs*") ./release/
+        cp -rf $(find ./artifact/ -type f -name "*.buildinfo") ./release/
         cd ./artifact/
         ls -Ahl
     - name: Upload artifact
@@ -103,4 +106,4 @@ jobs:
         tag: ${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ./artifact/*
+        artifacts: ./release/*
