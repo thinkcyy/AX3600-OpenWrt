@@ -85,10 +85,10 @@ jobs:
         rm -rf ./artifact/
         mkdir -p ./artifact/
         mkdir -p ./release/
+        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*squashfs*") ./release/
+        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*.buildinfo") ./release/
         mv openwrt/bin/targets/qualcommax/ipq807x/*squashfs-factory.* ./artifact/
         mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
-        cp -rf $(find ./artifact/ -type f -name "*squashfs*") ./release/
-        cp -rf $(find ./artifact/ -type f -name "*.buildinfo") ./release/
         cd ./artifact/
         ls -Ahl
     - name: Upload artifact
