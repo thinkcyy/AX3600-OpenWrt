@@ -1,4 +1,4 @@
-name: AX6-zhkong-thinkcy-20230912
+name: Show-deconfig
 
 on:
 #  schedule:
@@ -51,7 +51,7 @@ jobs:
         df -h
     - name: prepare
       run: |
-        bash ./scripts/prepare-AX6-thinkcy.sh
+        bash ./scripts/prepare-deconfig.sh
     - name: Get Architecture
       working-directory: ${{ github.workspace }}/openwrt
       run: |
@@ -59,36 +59,13 @@ jobs:
         echo "LAST_COMMIT_HASH=${LAST_COMMIT_HASH}" >> $GITHUB_ENV
         tag_name=$(date +%Y%m%d-%H%M)
         echo "tag_name=${tag_name}" >>$GITHUB_ENV
-    - name: Make Download
-      run: |
-        cd openwrt
-        make download -j50
-    - name: Compile Openwrt
-      id: compileopenwrt
-      continue-on-error: true
-      run: |
-        cd openwrt
-        #echo | make kernel_oldconfig -j$(($(nproc) + 1)) 
-        IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
-        echo $?
-    - name: If Error
-      if: steps.compileopenwrt.outcome == 'failure'
-      run: |
-        cat openwrt/.config
-        echo '================================================================'
-        cd openwrt && make -j1 V=s
-    - name: Print Disk Space After
-      run: df -h
+
     - name: Organize files
       id: organize
       run: |
         rm -rf ./artifact/
         mkdir -p ./artifact/
-        mkdir -p ./release/
-        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*squashfs*") ./release/
-        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*.buildinfo") ./release/
-        mv openwrt/bin/targets/qualcommax/ipq807x/*squashfs-factory.* ./artifact/
-        mv openwrt/bin/targets/qualcommax/ipq807x/config.buildinfo ./artifact/
+        mv openwrt/.config ./artifact/deconfig.config
         cd ./artifact/
         ls -Ahl
     - name: Upload artifact
@@ -96,14 +73,3 @@ jobs:
       with:
         name: OpenWRT-AX6-zhkong-thinkcy_${{ env.tag_name }}
         path: ./artifact/
-
-    - name: Create release
-      id: create_release
-      uses: ncipollo/release-action@v1.12.0
-      with:
-        name: OpenWRT-AX6-zhkong-thinkcy-${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
-        allowUpdates: true
-        tag: ${{ env.tag_name }}-${{ env.LAST_COMMIT_HASH }}
-        replacesArtifacts: true
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ./release/*
