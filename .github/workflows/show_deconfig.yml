@@ -51,7 +51,7 @@ jobs:
         df -h
     - name: prepare
       run: |
-        bash ./scripts/prepare-AX6-thinkcy.sh
+        bash ./scripts/prepare-deconfig.sh
     - name: Get Architecture
       working-directory: ${{ github.workspace }}/openwrt
       run: |
