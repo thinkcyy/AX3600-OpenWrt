@@ -62,7 +62,7 @@ bash ../scripts/preset-terminal-tools.sh
 
 # config file
 cp ../config/AX6-zhkong-thinkcy-minimal.config .config
-make defconfig
+# make defconfig
 
 # 编译固件
 make download -j$(nproc)
