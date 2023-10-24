@@ -58,7 +58,7 @@ svn export https://github.com/immortalwrt/immortalwrt/branches/master/package/em
 bash ../scripts/fix-argon.sh
 
 # 增加 oh-my-zsh
-bash ../scripts/preset-terminal-tools.sh
+# bash ../scripts/preset-terminal-tools.sh
 
 # config file
 cp ../config/AX6-zhkong-thinkcy-minimal.config .config
